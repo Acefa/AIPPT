@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三层记忆架构：AI的「第二大脑」</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+</style>
+</head>
+<body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0a0a14;">
+
+<div style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:#1a1a2e;">
+
+  <!-- 深色渐变背景 -->
+  <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);"></div>
+
+  <!-- 装饰性网格线 -->
+  <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.04;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#ffffff" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+
+  <!-- 右上角装饰光晕 -->
+  <div style="position:absolute;top:-120px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(233,69,96,0.12) 0%,transparent 70%);border-radius:50%;"></div>
+
+  <!-- 左下角装饰光晕 -->
+  <div style="position:absolute;bottom:-150px;left:-100px;width:450px;height:450px;background:radial-gradient(circle,rgba(15,52,96,0.4) 0%,transparent 70%);border-radius:50%;"></div>
+
+  <!-- 顶部标签栏 -->
+  <div style="position:absolute;top:28px;left:60px;display:flex;align-items:center;gap:12px;">
+    <div style="width:8px;height:8px;background:#e94560;border-radius:50;box-shadow:0 0 8px rgba(233,69,96,0.6);"></div>
+    <span style="font-size:12px;color:rgba(255,255,255,0.35);letter-spacing:3px;text-transform:uppercase;">MEMORY ARCHITECTURE</span>
+  </div>
+
+  <!-- 页码 -->
+  <div style="position:absolute;top:28px;right:60px;font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:1px;">
+    <span style="color:#e94560;font-weight:700;">05</span> / 10
+  </div>
+
+  <!-- 主标题区域 -->
+  <div style="position:absolute;top:62px;left:60px;right:60px;">
+    <h1 style="margin:0;font-size:34px;font-weight:900;color:#ffffff;line-height:1.3;letter-spacing:1px;">
+      三层记忆架构：AI的<span style="color:#e94560;">「第二大脑」</span>
+    </h1>
+    <p style="margin:10px 0 0 0;font-size:14px;color:rgba(255,255,255,0.45);font-weight:300;line-height:1.6;">
+      如果 TELOS 定义了「你是谁」，那么记忆系统就记录了「你做过什么」
+    </p>
+  </div>
+
+  <!-- ========== 左侧：冰山/金字塔图 ========== -->
+  <div style="position:absolute;top:155px;left:50px;width:520px;height:520px;">
+
+    <svg width="520" height="520" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;">
+      <!-- 水面线 -->
+      <line x1="30" y1="195" x2="490" y2="195" stroke="rgba(233,69,96,0.25)" stroke-width="1" stroke-dasharray="6,4"/>
+      <text x="478" y="190" fill="rgba(233,69,96,0.4)" font-size="10" font-family="'Noto Sans SC',sans-serif" text-anchor="end">▲ 可见层</text>
+      <text x="478" y="210" fill="rgba(255,255,255,0.2)" font-size="10" font-family="'Noto Sans SC',sans-serif" text-anchor="end">▼ 深层存储</text>
+
+      <!-- 冰山主体 - 第一层（短期记忆）-->
+      <polygon points="260,42 355,175 165,175" fill="url(#layer1Grad)" opacity="0.95"/>
+      <!-- 冰山主体 - 第二层（情景记忆）-->
+      <polygon points="165,185 355,185 410,340 110,340" fill="url(#layer2Grad)" opacity="0.9"/>
+      <!-- 冰山主体 - 第三层（语义记忆）-->
+      <polygon points="110,350 410,350 470,510 50,510" fill="url(#layer3Grad)" opacity="0.85"/>
+
+      <!-- 渐变定义 -->
+      <defs>
+        <linearGradient id="layer1Grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e94560"/>
+          <stop offset="100%" stop-color="#c23152"/>
+        </linearGradient>
+        <linearGradient id="layer2Grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0f3460"/>
+          <stop offset="100%" stop-color="#0a2848"/>
+        </linearGradient>
+        <linearGradient id="layer3Grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#16213e"/>
+          <stop offset="100%" stop-color="#0e1628"/>
+        </linearGradient>
+
+        <!-- 发光效果 -->
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- 层级边框发光 -->
+      <polygon points="260,42 355,175 165,175" fill="none" stroke="rgba(233,69,96,0.5)" stroke-width="1.2" filter="url(#glow)"/>
+      <polygon points="165,185 355,185 410,340 110,340" fill="none" stroke="rgba(15,52,96,0.5)" stroke-width="1"/>
+      <polygon points="110,350 410,350 470,510 50,510" fill="none" stroke="rgba(22,33,62,0.4)" stroke-width="1"/>
+
+      <!-- 第一层文字 -->
+      <text x="260" y="105" fill="#ffffff" font-size="15" font-weight="700" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">短期记忆</text>
+      <text x="260" y="126" fill="rgba(255,255,255,0.7)" font-size="11" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">Working Memory</text>
+      <text x="260" y="152" fill="rgba(255,255,255,0.55)" font-size="11" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">当前对话 · 实时上下文</text>
+
+      <!-- 第二层文字 -->
+      <text x="260" y="245" fill="#ffffff" font-size="15" font-weight="700" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">情景记忆</text>
+      <text x="260" y="268" fill="rgba(255,255,255,0.6)" font-size="11" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">Episodic Memory</text>
+      <text x="260" y="298" fill="rgba(255,255,255,0.45)" font-size="11" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">对话记录 · 项目历史 · 具体事件</text>
+
+      <!-- 第三层文字 -->
+      <text x="260" y="405" fill="#ffffff" font-size="15" font-weight="700" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">语义记忆</text>
+      <text x="260" y="428" fill="rgba(255,255,255,0.55)" font-size="11" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">Semantic Memory</text>
+      <text x="260" y="458" fill="rgba(255,255,255,0.4)" font-size="11" font-family="'Noto Sans SC',sans-serif" text-anchor="middle">提炼的知识 · 行为模式 · 偏好理解</text>
+
+      <!-- 层级之间的连接小箭头 -->
+      <text x="260" y="182" fill="rgba(255,255,255,0.2)" font-size="10" font-family="sans-serif" text-anchor="middle">⬇</text>
+      <text x="260" y="348" fill="rgba(255,255,255,0.2)" font-size="10" font-family="sans-serif" text-anchor="middle">⬇</text>
+    </svg>
+  </div>
+
+  <!-- ========== 右侧：说明卡片区域 ========== -->
+  <div style="position:absolute;top:155px;right:50px;width:600px;display:flex;flex-direction:column;gap:14px;">
+
+    <!-- 卡片1：短期记忆 -->
+    <div style="background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.2);border-radius:12px;padding:18px 22px;position:relative;backdrop-filter:blur(4px);">
+      <div style="position:absolute;left:0;top:12px;bottom:12px;width:3px;background:linear-gradient(180deg,#e94560,rgba(233,69,96,0.3));border-radius:2px;"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:28px;height:28px;background:linear-gradient(135deg,#e94560,#c23152);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="4" fill="#fff"/>
+            <circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.5" stroke-dasharray="3,3"/>
+          </svg>
+        </div>
+        <span style="font-size:15px;font-weight:700;color:#e94560;">短期记忆</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.35);margin-left:4px;">实时 · 动态</span>
+      </div>
+      <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;padding-left:38px;">
+        当前对话的实时上下文，就像聊天时记住的前几句话。<br/>
+        <span style="color:rgba(255,255,255,0.35);font-size:12px;">窗口有限，用完即释放</span>
+      </p>
+    </div>
+
+    <!-- 卡片2：情景记忆 -->
+    <div style="background:rgba(15,52,96,0.15);border:1px solid rgba(15,52,96,0.3);border-radius:12px;padding:18px 22px;position:relative;backdrop-filter:blur(4px);">
+      <div style="position:absolute;left:0;top:12px;bottom:12px;width:3px;background:linear-gradient(180deg,#3a7bd5,rgba(58,123,213,0.3));border-radius:2px;"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:28px;height:28px;background:linear-gradient(135deg,#0f3460,#3a7bd5);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="16" height="16" rx="2" stroke="#fff" stroke-width="1.5"/>
+            <line x1="8" y1="9" x2="16" y2="9" stroke="#fff" stroke-width="1.2"/>
+            <line x1="8" y1="13" x2="14" y2="13" stroke="#fff" stroke-width="1.2" opacity="0.6"/>
+          </svg>
+        </div>
+        <span style="font-size:15px;font-weight:700;color:#5b9bd5;">情景记忆</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.35);margin-left:4px;">精确 · 可回溯</span>
+      </div>
+      <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;padding-left:38px;">
+        具体对话记录与项目历史，AI 可准确回忆：<br/>
+        <span style="color:rgba(255,255,255,0.4);font-size:12px;font-style:italic;">「上周我们讨论过那个 API 设计问题，你当时建议…」</span>
+      </p>
+    </div>
+
+    <!-- 卡片3：语义记忆 -->
+    <div style="background:rgba(22,33,62,0.25);border:1px solid rgba(22,33,62,0.4);border-radius:12px;padding:18px 22px;position:relative;backdrop-filter:blur(4px);">
+      <div style="position:absolute;left:0;top:12px;bottom:12px;width:3px;background:linear-gradient(180deg,#4a6fa5,rgba(74,111,165,0.3));border-radius:2px;"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:28px;height:28px;background:linear-gradient(135deg,#16213e,#4a6fa5);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="10" r="3" stroke="#fff" stroke-width="1.2"/>
+            <circle cx="16" cy="10" r="3" stroke="#fff" stroke-width="1.2"/>
+            <circle cx="12" cy="16" r="3" stroke="#fff" stroke-width="1.2"/>
+            <line x1="10.5" y1="11" x2="13.5" y2="11" stroke="#fff" stroke-width="0.8" opacity="0.5"/>
+            <line x1="9.5" y1="12.5" x2="11" y2="14" stroke="#fff" stroke-width="0.8" opacity="0.5"/>
+            <line x1="14.5" y1="12.5" x2="13" y2="14" stroke="#fff" stroke-width="0.8" opacity="0.5"/>
+          </svg>
+        </div>
+        <span style="font-size:15px;font-weight:700;color:#7ba3cc;">语义记忆</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.35);margin-left:4px;">抽象 · 提炼</span>
+      </div>
+      <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;padding-left:38px;">
+        从经验中提炼的知识与模式，不是逐字记录，而是理解：<br/>
+        <span style="color:rgba(255,255,255,0.4);font-size:12px;font-style:italic;">「你偏好函数式风格」「你对性能优化特别关注」</span>
+      </p>
+    </div>
+
+    <!-- 核心机制卡片 -->
+    <div style="background:linear-gradient(135deg,rgba(233,69,96,0.06),rgba(15,52,96,0.12));border:1px solid rgba(233,69,96,0.15);border-radius:12px;padding:18px 22px;position:relative;margin-top:4px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L15 8.5L22 9.5L17 14.5L18 21.5L12 18L6 21.5L7 14.5L2 9.5L9 8.5L12 2Z" fill="#e94560" opacity="0.8"/>
+        </svg>
+        <span style="font-size:14px;font-weight:700;color:#e94560;">检索机制：向量数据库 + 相似度搜索</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;padding-left:30px;">
+        <div style="flex:1;">
+          <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;">
+            实现真正的<span style="color:#e94560;font-weight:500;">联想记忆</span>——听到一个词，自然联想到相关经历
+          </p>
+        </div>
+        <div style="flex-shrink:0;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);border-radius:8px;padding:8px 14px;">
+          <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.4);text-align:center;line-height:1.5;">
+            不是翻聊天记录<br/>
+            <span style="color:#e94560;font-weight:600;font-size:12px;">是联想记忆</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部装饰线 -->
+  <div style="position:absolute;bottom:24px;left:60px;right:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(233,69,96,0.15),rgba(15,52,96,0.15),transparent);"></div>
+
+  <!-- 底部标注 -->
+  <div style="position:absolute;bottom:32px;left:60px;">
+    <span style="font-size:11px;color:rgba(255,255,255,0.2);">PAI · 个人AI智能体架构</span>
+  </div>
+  <div style="position:absolute;bottom:32px;right:60px;">
+    <span style="font-size:11px;color:rgba(255,255,255,0.2);">Memory Architecture</span>
+  </div>
+
+</div>
+
+</body>
+</html>

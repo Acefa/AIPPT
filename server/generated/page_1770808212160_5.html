@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hooks与Skills：让AI主动感知并学会新能力</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+</style>
+</head>
+<body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0a0a1a;">
+<div style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);">
+
+  <!-- 背景装饰网格 -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(rgba(233,69,96,0.03) 1px,transparent 1px);background-size:30px 30px;z-index:0;"></div>
+
+  <!-- 左上角光晕 -->
+  <div style="position:absolute;top:-120px;left:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(233,69,96,0.1) 0%,transparent 70%);z-index:0;"></div>
+
+  <!-- 右下角光晕 -->
+  <div style="position:absolute;bottom:-150px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(15,52,96,0.4) 0%,transparent 70%);z-index:0;"></div>
+
+  <!-- 顶部标题栏 -->
+  <div style="position:relative;z-index:2;padding:32px 56px 0 56px;">
+    <!-- 页码标签 -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:8px;height:8px;background:#e94560;border-radius:50%;box-shadow:0 0 8px rgba(233,69,96,0.6);"></div>
+        <span style="font-size:12px;color:rgba(233,69,96,0.8);letter-spacing:3px;text-transform:uppercase;font-weight:500;">EXTENSIBILITY</span>
+      </div>
+      <span style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;">06 / 10</span>
+    </div>
+
+    <!-- 主标题 -->
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="width:4px;height:42px;background:linear-gradient(180deg,#e94560,rgba(233,69,96,0.2));border-radius:2px;"></div>
+      <h1 style="margin:0;font-size:32px;font-weight:700;color:#ffffff;letter-spacing:1px;">Hooks与Skills<span style="color:rgba(255,255,255,0.4);font-weight:300;font-size:26px;margin-left:12px;">让AI主动感知并学会新能力</span></h1>
+    </div>
+  </div>
+
+  <!-- 主内容区：左右分栏 -->
+  <div style="position:relative;z-index:2;display:flex;gap:28px;padding:24px 56px 0 56px;height:480px;">
+
+    <!-- ========== 左栏：Hooks ========== -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+      <!-- 左栏标题 -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#e94560,#c73652);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(233,69,96,0.3);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:block;">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:18px;font-weight:700;color:#ffffff;">Hooks 事件钩子</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;">给AI安装「传感器」，主动感知环境</div>
+        </div>
+      </div>
+
+      <!-- 核心要点 -->
+      <div style="background:rgba(233,69,96,0.06);border:1px solid rgba(233,69,96,0.15);border-radius:12px;padding:14px 16px;">
+        <div style="font-size:12px;color:rgba(233,69,96,0.9);font-weight:500;margin-bottom:8px;letter-spacing:1px;">核心理念</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.7;">借鉴 Git Hooks 概念，在<span style="color:#e94560;font-weight:500;">特定事件</span>发生时自动触发，让AI从被动等待变为主动感知</div>
+      </div>
+
+      <!-- 事件触发流程图 -->
+      <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-bottom:8px;">EVENT TRIGGER FLOW</div>
+
+        <!-- 流程节点 -->
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <!-- 节点1 -->
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="min-width:120px;background:linear-gradient(135deg,rgba(233,69,96,0.2),rgba(233,69,96,0.08));border:1px solid rgba(233,69,96,0.3);border-radius:8px;padding:8px 12px;text-align:center;">
+              <div style="font-size:10px;color:rgba(233,69,96,0.7);margin-bottom:2px;">onPrompt</div>
+              <div style="font-size:12px;color:#fff;font-weight:500;">提问前</div>
+            </div>
+            <svg width="20" height="12" viewBox="0 0 20 12"><path d="M0 6h16M12 1l5 5-5 5" stroke="#e94560" stroke-width="1.5" fill="none" opacity="0.5"/></svg>
+            <div style="font-size:12px;color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.04);border-radius:6px;padding:6px 10px;border:1px solid rgba(255,255,255,0.06);">自动获取 Git 状态 + 当前任务</div>
+          </div>
+
+          <!-- 连接线 -->
+          <div style="margin-left:60px;width:1px;height:4px;border-left:1px dashed rgba(233,69,96,0.2);"></div>
+
+          <!-- 节点2 -->
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="min-width:120px;background:linear-gradient(135deg,rgba(233,69,96,0.2),rgba(233,69,96,0.08));border:1px solid rgba(233,69,96,0.3);border-radius:8px;padding:8px 12px;text-align:center;">
+              <div style="font-size:10px;color:rgba(233,69,96,0.7);margin-bottom:2px;">onResponse</div>
+              <div style="font-size:12px;color:#fff;font-weight:500;">回复后</div>
+            </div>
+            <svg width="20" height="12" viewBox="0 0 20 12"><path d="M0 6h16M12 1l5 5-5 5" stroke="#e94560" stroke-width="1.5" fill="none" opacity="0.5"/></svg>
+            <div style="font-size:12px;color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.04);border-radius:6px;padding:6px 10px;border:1px solid rgba(255,255,255,0.06);">自动记录时间戳 + 操作日志</div>
+          </div>
+
+          <!-- 连接线 -->
+          <div style="margin-left:60px;width:1px;height:4px;border-left:1px dashed rgba(233,69,96,0.2);"></div>
+
+          <!-- 节点3 -->
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="min-width:120px;background:linear-gradient(135deg,rgba(233,69,96,0.2),rgba(233,69,96,0.08));border:1px solid rgba(233,69,96,0.3);border-radius:8px;padding:8px 12px;text-align:center;">
+              <div style="font-size:10px;color:rgba(233,69,96,0.7);margin-bottom:2px;">onToolCall</div>
+              <div style="font-size:12px;color:#fff;font-weight:500;">调用工具前</div>
+            </div>
+            <svg width="20" height="12" viewBox="0 0 20 12"><path d="M0 6h16M12 1l5 5-5 5" stroke="#e94560" stroke-width="1.5" fill="none" opacity="0.5"/></svg>
+            <div style="font-size:12px;color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.04);border-radius:6px;padding:6px 10px;border:1px solid rgba(255,255,255,0.06);">先同步工作区状态 + 校验</div>
+          </div>
+        </div>
+
+        <!-- 底部标注 -->
+        <div style="display:flex;align-items:center;gap:6px;margin-top:10px;">
+          <div style="width:16px;height:1px;background:rgba(233,69,96,0.4);"></div>
+          <span style="font-size:10px;color:rgba(255,255,255,0.3);">全自动 · 零干预 · 实时感知</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 中间分隔线 ========== -->
+    <div style="width:1px;background:linear-gradient(180deg,transparent,rgba(255,255,255,0.08),rgba(233,69,96,0.15),rgba(255,255,255,0.08),transparent);flex-shrink:0;"></div>
+
+    <!-- ========== 右栏：Skills ========== -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+      <!-- 右栏标题 -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#0f3460,#1a5276);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(15,52,96,0.4);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:block;">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.9"/>
+            <rect x="14" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.6"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5" fill="white" opacity="0.6"/>
+            <rect x="14" y="14" width="7" height="7" rx="1.5" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:18px;font-weight:700;color:#ffffff;">Skills 能力插件</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;">可命名、参数化、可组合的AI扩展</div>
+        </div>
+      </div>
+
+      <!-- 命令调用示例 -->
+      <div style="background:rgba(10,10,26,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 16px;font-family:'Courier New',monospace;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#e94560;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#f0a500;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#4ecca3;"></div>
+          <span style="font-size:10px;color:rgba(255,255,255,0.25);margin-left:8px;">SKILL COMMANDS</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="font-size:13px;">
+            <span style="color:#e94560;">$</span>
+            <span style="color:rgba(78,204,163,0.9);margin-left:6px;">/review-pr</span>
+            <span style="color:rgba(255,255,255,0.3);margin-left:6px;">--branch=feat/auth</span>
+          </div>
+          <div style="font-size:13px;">
+            <span style="color:#e94560;">$</span>
+            <span style="color:rgba(78,204,163,0.9);margin-left:6px;">/commit</span>
+            <span style="color:rgba(255,255,255,0.3);margin-left:6px;">--conventional --scope=api</span>
+          </div>
+          <div style="font-size:13px;">
+            <span style="color:#e94560;">$</span>
+            <span style="color:rgba(78,204,163,0.9);margin-left:6px;">/analyze-logs</span>
+            <span style="color:rgba(255,255,255,0.3);margin-left:6px;">--last=24h --level=error</span>
+          </div>
+          <div style="font-size:13px;">
+            <span style="color:#e94560;">$</span>
+            <span style="color:rgba(78,204,163,0.9);margin-left:6px;">/deploy</span>
+            <span style="color:rgba(255,255,255,0.3);margin-left:6px;">--env=staging --dry-run</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 组合关系图 -->
+      <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-bottom:10px;">SKILL COMPOSITION</div>
+
+        <!-- 组合示意 -->
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;">
+          <!-- 顶层Skill -->
+          <div style="display:flex;justify-content:center;">
+            <div style="background:linear-gradient(135deg,rgba(15,52,96,0.5),rgba(15,52,96,0.2));border:1px solid rgba(78,204,163,0.3);border-radius:10px;padding:8px 20px;text-align:center;">
+              <div style="font-size:13px;color:#4ecca3;font-weight:600;">/full-review</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;">复合工作流</div>
+            </div>
+          </div>
+
+          <!-- 连接箭头 -->
+          <div style="display:flex;justify-content:center;gap:80px;">
+            <svg width="2" height="16" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="rgba(78,204,163,0.3)" stroke-width="1" stroke-dasharray="3,3"/></svg>
+            <svg width="2" height="16" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="rgba(78,204,163,0.3)" stroke-width="1" stroke-dasharray="3,3"/></svg>
+            <svg width="2" height="16" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="rgba(78,204,163,0.3)" stroke-width="1" stroke-dasharray="3,3"/></svg>
+          </div>
+
+          <!-- 子Skill -->
+          <div style="display:flex;justify-content:center;gap:12px;">
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 14px;text-align:center;">
+              <div style="font-size:12px;color:rgba(255,255,255,0.7);">/lint</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 14px;text-align:center;">
+              <div style="font-size:12px;color:rgba(255,255,255,0.7);">/test</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 14px;text-align:center;">
+              <div style="font-size:12px;color:rgba(255,255,255,0.7);">/review-pr</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 社区共享标签 -->
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.05);border-radius:4px;padding:3px 8px;border:1px solid rgba(255,255,255,0.06);">📦 社区共享</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.05);border-radius:4px;padding:3px 8px;border:1px solid rgba(255,255,255,0.06);">🔧 团队定制</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.05);border-radius:4px;padding:3px 8px;border:1px solid rgba(255,255,255,0.06);">🧩 类似 VS Code 扩展市场</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部重点总结 -->
+  <div style="position:absolute;bottom:0;left:0;right:0;z-index:2;padding:0 56px 24px 56px;">
+    <div style="background:linear-gradient(135deg,rgba(233,69,96,0.1),rgba(233,69,96,0.03));border:1px solid rgba(233,69,96,0.15);border-radius:12px;padding:12px 24px;display:flex;align-items:center;gap:14px;">
+      <div style="width:6px;height:6px;background:#e94560;border-radius:50;flex-shrink:0;box-shadow:0 0 10px rgba(233,69,96,0.5);"></div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.85);font-weight:400;">
+        <span style="color:#e94560;font-weight:600;">Hooks</span> 让AI感知环境，<span style="color:#4ecca3;font-weight:600;">Skills</span> 让AI学会新能力 —— 用自然语言「编程」AI的行为，这是真正的<span style="font-weight:700;color:#fff;">可编程AI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部装饰线 -->
+  <div style="position:absolute;bottom:0;left:56px;right:56px;height:2px;background:linear-gradient(90deg,transparent,rgba(233,69,96,0.3),rgba(15,52,96,0.3),transparent);z-index:1;"></div>
+
+</div>
+</body>
+</html>

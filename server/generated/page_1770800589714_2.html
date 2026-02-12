@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第一次尝试与失败教训</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+</style>
+</head>
+<body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0a0a1a;">
+
+<div style="width:1024px;height:768px;position:relative;overflow:hidden;font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);">
+
+  <!-- 背景装饰网格 -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:100%;background-image:
+    linear-gradient(rgba(233,69,96,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233,69,96,0.03) 1px, transparent 1px);
+    background-size:40px 40px;z-index:0;"></div>
+
+  <!-- 右上角装饰圆弧 -->
+  <div style="position:absolute;top:-120px;right:-120px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(233,69,96,0.12) 0%,transparent 70%);z-index:0;"></div>
+
+  <!-- 左下角装饰 -->
+  <div style="position:absolute;bottom:-80px;left:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(15,52,96,0.4) 0%,transparent 70%);z-index:0;"></div>
+
+  <!-- 顶部警示条 -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,#e94560,#ff6b6b,#e94560,#ff6b6b,#e94560);z-index:2;"></div>
+
+  <!-- 页码 -->
+  <div style="position:absolute;top:24px;right:40px;z-index:3;display:flex;align-items:center;gap:8px;">
+    <span style="font-size:13px;color:rgba(255,255,255,0.35);letter-spacing:1px;">03 / 08</span>
+  </div>
+
+  <!-- 标题区域 -->
+  <div style="position:absolute;top:32px;left:56px;z-index:3;display:flex;align-items:center;gap:16px;">
+    <!-- 失败图标 -->
+    <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#e94560,#c0392b);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(233,69,96,0.4);">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="none"/>
+        <line x1="8" y1="8" x2="16" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="16" y1="8" x2="8" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#e94560;letter-spacing:3px;font-weight:500;margin-bottom:2px;">LESSON LEARNED</div>
+      <h1 style="margin:0;font-size:28px;font-weight:700;color:#ffffff;letter-spacing:1px;">第一次尝试与失败教训</h1>
+    </div>
+  </div>
+
+  <!-- 标准流程条 -->
+  <div style="position:absolute;top:108px;left:56px;right:56px;z-index:3;">
+    <div style="display:flex;align-items:center;gap:0;background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 20px;border:1px solid rgba(255,255,255,0.06);">
+      <span style="font-size:11px;color:rgba(255,255,255,0.4);margin-right:16px;white-space:nowrap;">标准流程</span>
+      <div style="display:flex;align-items:center;gap:0;flex:1;justify-content:center;">
+        <div style="background:rgba(15,52,96,0.6);padding:6px 18px;border-radius:6px;font-size:13px;color:rgba(255,255,255,0.8);white-space:nowrap;">📝 分镜脚本</div>
+        <svg width="28" height="12" viewBox="0 0 28 12" style="flex-shrink:0;"><path d="M2 6h20m0 0l-4-4m4 4l-4 4" stroke="rgba(233,69,96,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="background:rgba(15,52,96,0.6);padding:6px 18px;border-radius:6px;font-size:13px;color:rgba(255,255,255,0.8);white-space:nowrap;">🔊 TTS语音</div>
+        <svg width="28" height="12" viewBox="0 0 28 12" style="flex-shrink:0;"><path d="M2 6h20m0 0l-4-4m4 4l-4 4" stroke="rgba(233,69,96,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="background:rgba(15,52,96,0.6);padding:6px 18px;border-radius:6px;font-size:13px;color:rgba(255,255,255,0.8);white-space:nowrap;">🎬 视频+字幕</div>
+      </div>
+      <div style="margin-left:16px;display:flex;align-items:center;gap:6px;">
+        <div style="width:6px;height:6px;border-radius:50%;background:#e94560;"></div>
+        <span style="font-size:11px;color:#e94560;">直接让AI自动规划</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中间内容区：左侧叙述 + 右侧问题卡片 -->
+  <div style="position:absolute;top:168px;left:56px;right:56px;z-index:3;display:flex;gap:28px;">
+
+    <!-- 左侧：经过描述 -->
+    <div style="flex:1;min-width:0;">
+      <div style="background:rgba(255,255,255,0.03);border-radius:14px;padding:24px;border:1px solid rgba(255,255,255,0.06);height:100%;box-sizing:border-box;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+          <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#0f3460,#16213e);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.1);">
+            <span style="font-size:10px;color:rgba(255,255,255,0.6);">i</span>
+          </div>
+          <span style="font-size:12px;color:rgba(255,255,255,0.45);letter-spacing:2px;">尝试经过</span>
+        </div>
+
+        <p style="margin:0 0 14px 0;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.85;">
+          采用 <span style="color:#e94560;font-weight:500;">Remotion Skills</span>，随手写了一个简单剧本让AI自动规划生成。
+        </p>
+
+        <div style="display:flex;gap:12px;margin-bottom:18px;">
+          <div style="flex:1;background:rgba(46,204,113,0.08);border-radius:8px;padding:12px 14px;border:1px solid rgba(46,204,113,0.15);">
+            <div style="font-size:11px;color:rgba(46,204,113,0.7);margin-bottom:4px;">✓ 好消息</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);">视频确实生成出来了</div>
+          </div>
+          <div style="flex:1;background:rgba(233,69,96,0.08);border-radius:8px;padding:12px 14px;border:1px solid rgba(233,69,96,0.15);">
+            <div style="font-size:11px;color:rgba(233,69,96,0.8);margin-bottom:4px;">✗ 坏消息</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);">效果惨不忍睹</div>
+          </div>
+        </div>
+
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.8;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;">
+          第一次直接报错无法运行<br>
+          第二次才勉强成功生成<br>
+          <span style="color:rgba(233,69,96,0.7);">→ 不能让AI自由发挥写代码</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：三大问题 -->
+    <div style="width:440px;flex-shrink:0;display:flex;flex-direction:column;gap:14px;">
+
+      <!-- 问题1 -->
+      <div style="background:linear-gradient(135deg,rgba(233,69,96,0.08),rgba(233,69,96,0.03));border-radius:12px;padding:18px 20px;border:1px solid rgba(233,69,96,0.15);position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#e94560,#c0392b);border-radius:2px;"></div>
+        <div style="display:flex;align-items:flex-start;gap:14px;padding-left:8px;">
+          <div style="width:36px;height:36px;border-radius:10px;background:rgba(233,69,96,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+            <span style="font-size:16px;">🖼️</span>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#e94560;margin-bottom:6px;">素材质量低劣</div>
+            <div style="font-size:12.5px;color:rgba(255,255,255,0.6);line-height:1.7;">
+              背景粗糙简陋，无法使用真实素材<br>
+              只能依赖 Emoji 表情包充当视觉元素
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 问题2 -->
+      <div style="background:linear-gradient(135deg,rgba(233,69,96,0.08),rgba(233,69,96,0.03));border-radius:12px;padding:18px 20px;border:1px solid rgba(233,69,96,0.15);position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#e94560,#c0392b);border-radius:2px;"></div>
+        <div style="display:flex;align-items:flex-start;gap:14px;padding-left:8px;">
+          <div style="width:36px;height:36px;border-radius:10px;background:rgba(233,69,96,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+            <span style="font-size:16px;">🎭</span>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#e94560;margin-bottom:6px;">动画混乱无序</div>
+            <div style="font-size:12.5px;color:rgba(255,255,255,0.6);line-height:1.7;">
+              出现时机错乱，节奏完全失控<br>
+              许多镜头没有动画，直接硬切
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 问题3 -->
+      <div style="background:linear-gradient(135deg,rgba(233,69,96,0.08),rgba(233,69,96,0.03));border-radius:12px;padding:18px 20px;border:1px solid rgba(233,69,96,0.15);position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#e94560,#c0392b);border-radius:2px;"></div>
+        <div style="display:flex;align-items:flex-start;gap:14px;padding-left:8px;">
+          <div style="width:36px;height:36px;border-radius:10px;background:rgba(233,69,96,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+            <span style="font-size:16px;">🎲</span>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#e94560;margin-bottom:6px;">代码随机性太大</div>
+            <div style="font-size:12.5px;color:rgba(255,255,255,0.6);line-height:1.7;">
+              生成代码不稳定，首次直接报错<br>
+              输出结果不可预测，质量无法保证
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 底部核心结论 -->
+  <div style="position:absolute;bottom:36px;left:56px;right:56px;z-index:3;">
+    <div style="background:linear-gradient(135deg,rgba(233,69,96,0.12),rgba(233,69,96,0.04));border-radius:12px;padding:16px 28px;border:1px solid rgba(233,69,96,0.2);display:flex;align-items:center;gap:16px;box-shadow:0 4px 30px rgba(233,69,96,0.1);">
+      <!-- 警示图标 -->
+      <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#e94560,#c0392b);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(233,69,96,0.3);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 22h20L12 2z" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/>
+          <line x1="12" y1="10" x2="12" y2="15" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="18" r="1" fill="white"/>
+        </svg>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:11px;color:rgba(233,69,96,0.7);letter-spacing:2px;margin-bottom:3px;">核心教训</div>
+        <div style="font-size:16px;font-weight:700;color:#ffffff;letter-spacing:0.5px;">
+          AI直接生成代码的随机性太大，<span style="color:#e94560;">完全不可控</span> — 必须约束AI的自由度
+        </div>
+      </div>
+      <div style="width:1px;height:36px;background:rgba(233,69,96,0.2);flex-shrink:0;"></div>
+      <div style="font-size:42px;font-weight:900;color:rgba(233,69,96,0.25);flex-shrink:0;line-height:1;letter-spacing:-2px;">!</div>
+    </div>
+  </div>
+
+  <!-- 底部装饰线 -->
+  <div style="position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,rgba(233,69,96,0.3),transparent);z-index:2;"></div>
+
+</div>
+
+</body>
+</html>

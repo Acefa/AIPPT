@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1024">
+<title>AI自动化视频生成流水线</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+</style>
+</head>
+<body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0a0a14;">
+<div style="width:1024px;height:768px;position:relative;overflow:hidden;font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 70%,#1a1a2e 100%);">
+
+  <!-- 动态网格背景 -->
+  <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.06;" viewBox="0 0 1024 768">
+    <defs>
+      <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+        <path d="M 64 0 L 0 0 0 64" fill="none" stroke="#e94560" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+
+  <!-- 左上角装饰光晕 -->
+  <div style="position:absolute;top:-120px;left:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(233,69,96,0.15) 0%,transparent 70%);border-radius:50%;"></div>
+
+  <!-- 右下角装饰光晕 -->
+  <div style="position:absolute;bottom:-150px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(15,52,96,0.4) 0%,transparent 70%);border-radius:50%;"></div>
+
+  <!-- 顶部流动线条装饰 -->
+  <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.12;" viewBox="0 0 1024 768">
+    <path d="M0 200 Q256 150 512 220 T1024 180" fill="none" stroke="#e94560" stroke-width="1"/>
+    <path d="M0 250 Q300 200 600 270 T1024 230" fill="none" stroke="#e94560" stroke-width="0.5"/>
+    <path d="M0 550 Q256 600 512 530 T1024 570" fill="none" stroke="rgba(233,69,96,0.5)" stroke-width="0.5"/>
+    <path d="M0 590 Q300 640 600 560 T1024 610" fill="none" stroke="rgba(233,69,96,0.3)" stroke-width="0.5"/>
+  </svg>
+
+  <!-- 浮动几何装饰元素 -->
+  <svg style="position:absolute;top:60px;right:80px;opacity:0.08;" width="120" height="120" viewBox="0 0 120 120">
+    <polygon points="60,5 115,95 5,95" fill="none" stroke="#e94560" stroke-width="1.5"/>
+    <polygon points="60,25 95,85 25,85" fill="none" stroke="#e94560" stroke-width="1"/>
+  </svg>
+
+  <svg style="position:absolute;bottom:80px;left:60px;opacity:0.08;" width="80" height="80" viewBox="0 0 80 80">
+    <circle cx="40" cy="40" r="35" fill="none" stroke="#e94560" stroke-width="1.5"/>
+    <circle cx="40" cy="40" r="20" fill="none" stroke="#e94560" stroke-width="1"/>
+  </svg>
+
+  <!-- 右侧竖向装饰条 -->
+  <div style="position:absolute;top:50%;right:50px;transform:translateY(-50%);width:3px;height:200px;background:linear-gradient(180deg,transparent,rgba(233,69,96,0.3),rgba(233,69,96,0.6),rgba(233,69,96,0.3),transparent);border-radius:2px;"></div>
+
+  <!-- 左侧竖向装饰条 -->
+  <div style="position:absolute;top:50%;left:50px;transform:translateY(-50%);width:2px;height:150px;background:linear-gradient(180deg,transparent,rgba(233,69,96,0.2),rgba(233,69,96,0.4),rgba(233,69,96,0.2),transparent);border-radius:2px;"></div>
+
+  <!-- 主内容区域 -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:10;">
+
+    <!-- 顶部标签 -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:32px;">
+      <div style="width:40px;height:1px;background:linear-gradient(90deg,transparent,rgba(233,69,96,0.8));"></div>
+      <span style="font-size:13px;font-weight:400;color:rgba(233,69,96,0.9);letter-spacing:6px;text-transform:uppercase;">TECHNICAL SHARING</span>
+      <div style="width:40px;height:1px;background:linear-gradient(270deg,transparent,rgba(233,69,96,0.8));"></div>
+    </div>
+
+    <!-- AI 图标区域 -->
+    <div style="margin-bottom:28px;position:relative;">
+      <svg width="64" height="64" viewBox="0 0 64 64" style="filter:drop-shadow(0 0 20px rgba(233,69,96,0.3));">
+        <rect x="8" y="8" width="48" height="48" rx="12" fill="none" stroke="rgba(233,69,96,0.6)" stroke-width="1.5"/>
+        <circle cx="24" cy="28" r="4" fill="rgba(233,69,96,0.8)"/>
+        <circle cx="40" cy="28" r="4" fill="rgba(233,69,96,0.8)"/>
+        <path d="M22 40 Q32 48 42 40" fill="none" stroke="rgba(233,69,96,0.8)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="32" y1="2" x2="32" y2="8" stroke="rgba(233,69,96,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="32" cy="0" r="2" fill="rgba(233,69,96,0.5)"/>
+      </svg>
+    </div>
+
+    <!-- 主标题 -->
+    <h1 style="margin:0;font-size:52px;font-weight:900;color:#ffffff;text-align:center;line-height:1.25;letter-spacing:2px;text-shadow:0 4px 30px rgba(0,0,0,0.5),0 0 60px rgba(233,69,96,0.15);">
+      AI自动化视频生成流水线
+    </h1>
+
+    <!-- 分隔线 -->
+    <div style="margin:28px 0;display:flex;align-items:center;gap:16px;">
+      <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(233,69,96,0.6));"></div>
+      <div style="width:8px;height:8px;background:#e94560;transform:rotate(45deg);box-shadow:0 0 12px rgba(233,69,96,0.5);"></div>
+      <div style="width:120px;height:2px;background:linear-gradient(90deg,rgba(233,69,96,0.8),rgba(15,52,96,0.8));border-radius:1px;"></div>
+      <div style="width:8px;height:8px;background:#e94560;transform:rotate(45deg);box-shadow:0 0 12px rgba(233,69,96,0.5);"></div>
+      <div style="width:60px;height:1px;background:linear-gradient(270deg,transparent,rgba(233,69,96,0.6));"></div>
+    </div>
+
+    <!-- 副标题 -->
+    <p style="margin:0 0 20px 0;font-size:20px;font-weight:400;color:rgba(255,255,255,0.75);text-align:center;letter-spacing:1px;line-height:1.6;">
+      基于 Remotion + AI 的自动化视频生成方案
+    </p>
+
+    <!-- 核心理念标签 -->
+    <div style="background:linear-gradient(135deg,rgba(233,69,96,0.12),rgba(233,69,96,0.05));border:1px solid rgba(233,69,96,0.25);border-radius:40px;padding:12px 36px;margin-bottom:32px;backdrop-filter:blur(10px);">
+      <span style="font-size:15px;color:rgba(255,255,255,0.85);font-weight:500;letter-spacing:1px;">
+        核心思路：代码生成 → 配置生成，可控性与扩展性兼得
+      </span>
+    </div>
+
+    <!-- 三个关键词卡片 -->
+    <div style="display:flex;gap:24px;margin-top:8px;">
+      <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 22px;backdrop-filter:blur(5px);">
+        <svg width="20" height="20" viewBox="0 0 20 20">
+          <rect x="2" y="2" width="16" height="16" rx="3" fill="none" stroke="rgba(233,69,96,0.7)" stroke-width="1.2"/>
+          <path d="M6 10 L9 13 L14 7" fill="none" stroke="rgba(233,69,96,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="font-size:13px;color:rgba(255,255,255,0.7);font-weight:400;">配置驱动架构</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 22px;backdrop-filter:blur(5px);">
+        <svg width="20" height="20" viewBox="0 0 20 20">
+          <path d="M10 2 L18 7 L18 13 L10 18 L2 13 L2 7 Z" fill="none" stroke="rgba(233,69,96,0.7)" stroke-width="1.2"/>
+          <circle cx="10" cy="10" r="3" fill="rgba(233,69,96,0.5)"/>
+        </svg>
+        <span style="font-size:13px;color:rgba(255,255,255,0.7);font-weight:400;">AI + Skill 工作流</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 22px;backdrop-filter:blur(5px);">
+        <svg width="20" height="20" viewBox="0 0 20 20">
+          <circle cx="10" cy="10" r="7" fill="none" stroke="rgba(233,69,96,0.7)" stroke-width="1.2"/>
+          <path d="M10 5 L10 10 L14 12" fill="none" stroke="rgba(233,69,96,0.9)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span style="font-size:13px;color:rgba(255,255,255,0.7);font-weight:400;">从失败到成功</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部信息栏 -->
+  <div style="position:absolute;bottom:0;left:0;width:100%;height:56px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.3));display:flex;justify-content:space-between;align-items:center;padding:0 60px;box-sizing:border-box;">
+    <span style="font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:1px;">如何用 AI 构建稳定可控的自动化视频生成工作流</span>
+    <span style="font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:1px;">01 / 06</span>
+  </div>
+
+  <!-- 顶部细线装饰 -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent 5%,rgba(233,69,96,0.5) 30%,rgba(233,69,96,0.8) 50%,rgba(233,69,96,0.5) 70%,transparent 95%);"></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+/* ExportPanel — horizontal layout for bottom bar */
+.export-panel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.export-progress-section {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex: 1;
+    min-width: 0;
+}
+
+.export-progress-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+}
+
+.export-progress-label {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.export-progress-count {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.progress-bar {
+    flex: 1;
+    min-width: 80px;
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.export-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.export-hint {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    white-space: nowrap;
+}

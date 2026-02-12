@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill 架构设计：配置驱动</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+</style>
+</head>
+<body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0a0a14;">
+
+<div style="width:1024px;height:768px;position:relative;overflow:hidden;font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);">
+
+  <!-- 背景装饰网格 -->
+  <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.04;" viewBox="0 0 1024 768">
+    <defs>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e94560" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+
+  <!-- 背景光晕 -->
+  <div style="position:absolute;top:-120px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(233,69,96,0.08) 0%,transparent 70%);border-radius:50%;"></div>
+  <div style="position:absolute;bottom:-150px;left:-100px;width:450px;height:450px;background:radial-gradient(circle,rgba(15,52,96,0.25) 0%,transparent 70%);border-radius:50%;"></div>
+
+  <!-- 顶部标题栏 -->
+  <div style="position:absolute;top:0;left:0;right:0;height:90px;display:flex;align-items:center;padding:0 56px;z-index:10;">
+    <div style="display:flex;align-items:center;gap:16px;flex:1;">
+      <div style="width:4px;height:36px;background:linear-gradient(180deg,#e94560,#e94560aa);border-radius:2px;"></div>
+      <div>
+        <div style="font-size:26px;font-weight:700;color:#ffffff;letter-spacing:1px;line-height:1.2;">Skill 架构设计：配置驱动</div>
+        <div style="font-size:11px;color:#e94560;font-weight:500;letter-spacing:3px;margin-top:2px;">CONFIGURATION-DRIVEN ARCHITECTURE</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;">06 / 08</div>
+  </div>
+  <div style="position:absolute;top:90px;left:56px;right:56px;height:1px;background:linear-gradient(90deg,#e94560 0%,rgba(233,69,96,0.15) 50%,transparent 100%);"></div>
+
+  <!-- 核心抽象说明条 -->
+  <div style="position:absolute;top:108px;left:56px;right:56px;display:flex;align-items:center;gap:12px;">
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);font-weight:400;white-space:nowrap;">核心抽象</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="padding:4px 14px;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);border-radius:20px;font-size:11px;color:#e94560;font-weight:500;">固定背景</div>
+      <svg width="16" height="10" viewBox="0 0 16 10" style="opacity:0.3;"><path d="M0 5h12M10 1l4 4-4 4" stroke="#e94560" stroke-width="1.2" fill="none"/></svg>
+      <div style="padding:4px 14px;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);border-radius:20px;font-size:11px;color:#e94560;font-weight:500;">多元素依次出现</div>
+      <svg width="16" height="10" viewBox="0 0 16 10" style="opacity:0.3;"><path d="M0 5h12M10 1l4 4-4 4" stroke="#e94560" stroke-width="1.2" fill="none"/></svg>
+      <div style="padding:4px 14px;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);border-radius:20px;font-size:11px;color:#e94560;font-weight:500;">进出场动画</div>
+    </div>
+  </div>
+
+  <!-- ===== 中心架构图区域 ===== -->
+
+  <!-- 中心 JSON 配置核心 -->
+  <div style="position:absolute;top:195px;left:50%;transform:translateX(-50%);width:220px;z-index:5;">
+    <div style="background:linear-gradient(135deg,rgba(233,69,96,0.15),rgba(233,69,96,0.06));border:1.5px solid rgba(233,69,96,0.45);border-radius:16px;padding:20px 18px;text-align:center;backdrop-filter:blur(8px);box-shadow:0 0 40px rgba(233,69,96,0.1),inset 0 1px 0 rgba(255,255,255,0.05);">
+      <!-- JSON 图标 -->
+      <svg width="36" height="36" viewBox="0 0 36 36" style="margin-bottom:8px;">
+        <rect x="2" y="2" width="32" height="32" rx="6" fill="none" stroke="#e94560" stroke-width="1.5" opacity="0.6"/>
+        <text x="18" y="23" text-anchor="middle" fill="#e94560" font-size="13" font-weight="700" font-family="monospace">{ }</text>
+      </svg>
+      <div style="font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">JSON 配置</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.45);line-height:1.5;">时间 · 位置 · 动画<br/>分镜描述文件</div>
+    </div>
+  </div>
+
+  <!-- 左上：SVG 元素 -->
+  <div style="position:absolute;top:168px;left:80px;width:150px;z-index:4;">
+    <div style="background:rgba(22,33,62,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;text-align:center;backdrop-filter:blur(4px);box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+      <svg width="28" height="28" viewBox="0 0 28 28" style="margin-bottom:6px;">
+        <circle cx="14" cy="14" r="10" fill="none" stroke="#4fc3f7" stroke-width="1.5"/>
+        <polygon points="14,6 20,18 8,18" fill="none" stroke="#4fc3f7" stroke-width="1.2"/>
+      </svg>
+      <div style="font-size:13px;font-weight:600;color:#4fc3f7;">SVG 图形</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);margin-top:2px;">矢量图标 / 图表</div>
+    </div>
+  </div>
+
+  <!-- 右上：卡片文字 -->
+  <div style="position:absolute;top:168px;right:80px;width:150px;z-index:4;">
+    <div style="background:rgba(22,33,62,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;text-align:center;backdrop-filter:blur(4px);box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+      <svg width="28" height="28" viewBox="0 0 28 28" style="margin-bottom:6px;">
+        <rect x="4" y="6" width="20" height="16" rx="3" fill="none" stroke="#ab47bc" stroke-width="1.5"/>
+        <line x1="8" y1="12" x2="20" y2="12" stroke="#ab47bc" stroke-width="1" opacity="0.6"/>
+        <line x1="8" y1="16" x2="16" y2="16" stroke="#ab47bc" stroke-width="1" opacity="0.6"/>
+      </svg>
+      <div style="font-size:13px;font-weight:600;color:#ab47bc;">卡片文字</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);margin-top:2px;">标题 / 正文 / 标注</div>
+    </div>
+  </div>
+
+  <!-- 左下：表格 -->
+  <div style="position:absolute;top:310px;left:80px;width:150px;z-index:4;">
+    <div style="background:rgba(22,33,62,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;text-align:center;backdrop-filter:blur(4px);box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+      <svg width="28" height="28" viewBox="0 0 28 28" style="margin-bottom:6px;">
+        <rect x="4" y="5" width="20" height="18" rx="2" fill="none" stroke="#66bb6a" stroke-width="1.5"/>
+        <line x1="4" y1="11" x2="24" y2="11" stroke="#66bb6a" stroke-width="1"/>
+        <line x1="4" y1="17" x2="24" y2="17" stroke="#66bb6a" stroke-width="1"/>
+        <line x1="14" y1="5" x2="14" y2="23" stroke="#66bb6a" stroke-width="1"/>
+      </svg>
+      <div style="font-size:13px;font-weight:600;color:#66bb6a;">表格</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);margin-top:2px;">数据对比 / 参数</div>
+    </div>
+  </div>
+
+  <!-- 右下：列表 -->
+  <div style="position:absolute;top:310px;right:80px;width:150px;z-index:4;">
+    <div style="background:rgba(22,33,62,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;text-align:center;backdrop-filter:blur(4px);box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+      <svg width="28" height="28" viewBox="0 0 28 28" style="margin-bottom:6px;">
+        <circle cx="8" cy="9" r="2" fill="#ffa726"/>
+        <line x1="13" y1="9" x2="22" y2="9" stroke="#ffa726" stroke-width="1.2"/>
+        <circle cx="8" cy="15" r="2" fill="#ffa726"/>
+        <line x1="13" y1="15" x2="22" y2="15" stroke="#ffa726" stroke-width="1.2"/>
+        <circle cx="8" cy="21" r="2" fill="#ffa726"/>
+        <line x1="13" y1="21" x2="20" y2="21" stroke="#ffa726" stroke-width="1.2"/>
+      </svg>
+      <div style="font-size:13px;font-weight:600;color:#ffa726;">列表</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.35);margin-top:2px;">要点 / 步骤 / 枚举</div>
+    </div>
+  </div>
+
+  <!-- 连接箭头 SVG -->
+  <svg style="position:absolute;top:0;left:0;width:1024px;height:768px;z-index:3;pointer-events:none;" viewBox="0 0 1024 768">
+    <defs>
+      <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="rgba(233,69,96,0.5)"/>
+      </marker>
+      <marker id="arrowL" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+        <polygon points="8 0, 0 3, 8 6" fill="rgba(233,69,96,0.5)"/>
+      </marker>
+    </defs>
+    <!-- 左上 → 中心 -->
+    <line x1="238" y1="220" x2="395" y2="240" stroke="rgba(233,69,96,0.25)" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrowR)"/>
+    <!-- 右上 → 中心 -->
+    <line x1="786" y1="220" x2="630" y2="240" stroke="rgba(233,69,96,0.25)" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrowL)"/>
+    <!-- 左下 → 中心 -->
+    <line x1="238" y1="360" x2="395" y2="310" stroke="rgba(233,69,96,0.25)" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrowR)"/>
+    <!-- 右下 → 中心 -->
+    <line x1="786" y1="360" x2="630" y2="310" stroke="rgba(233,69,96,0.25)" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrowL)"/>
+    <!-- 中心 → 下方模板 -->
+    <line x1="512" y1="340" x2="512" y2="395" stroke="rgba(233,69,96,0.35)" stroke-width="1.5" marker-end="url(#arrowR)"/>
+  </svg>
+
+  <!-- Element 标签 -->
+  <div style="position:absolute;top:155px;left:56px;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:2px;font-weight:500;">ELEMENT 类型</div>
+
+  <!-- ===== 下方：Remotion 模板 + 流程 ===== -->
+  <div style="position:absolute;top:410px;left:56px;right:56px;z-index:5;">
+    <!-- Remotion 模板条 -->
+    <div style="background:linear-gradient(135deg,rgba(15,52,96,0.5),rgba(22,33,62,0.6));border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 24px;display:flex;align-items:center;gap:20px;backdrop-filter:blur(4px);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+      <div style="flex-shrink:0;">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <rect x="2" y="2" width="36" height="36" rx="8" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/>
+          <rect x="8" y="8" width="10" height="10" rx="2" fill="rgba(233,69,96,0.3)" stroke="#e94560" stroke-width="0.8"/>
+          <rect x="22" y="8" width="10" height="6" rx="2" fill="rgba(79,195,247,0.2)" stroke="#4fc3f7" stroke-width="0.8"/>
+          <rect x="8" y="22" width="24" height="4" rx="1" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="0.6"/>
+          <rect x="8" y="29" width="16" height="3" rx="1" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:600;color:#ffffff;margin-bottom:3px;">固定 Remotion 模板</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);line-height:1.5;">预构建核心组件 → AI 只需生成 JSON → 模板渲染输出视频</div>
+      </div>
+      <div style="flex-shrink:0;display:flex;align-items:center;gap:6px;">
+        <div style="padding:5px 12px;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);border-radius:6px;font-size:10px;color:#e94560;font-weight:500;">淡入</div>
+        <div style="padding:5px 12px;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);border-radius:6px;font-size:10px;color:#e94560;font-weight:500;">淡出</div>
+        <div style="padding:5px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:10px;color:rgba(255,255,255,0.2);font-weight:500;text-decoration:line-through;">缩放</div>
+        <div style="padding:5px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:10px;color:rgba(255,255,255,0.2);font-weight:500;text-decoration:line-through;">滑动</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 取舍策略 + 验证方案 双栏 -->
+  <div style="position:absolute;top:510px;left:56px;right:56px;display:flex;gap:16px;z-index:5;">
+    <!-- 取舍策略 -->
+    <div style="flex:1;background:rgba(22,33,62,0.5);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 20px;backdrop-filter:blur(4px);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <svg width="18" height="18" viewBox="0 0 18 18">
+          <path d="M9 2L2 16h14L9 2z" fill="none" stroke="#ffa726" stroke-width="1.3"/>
+          <line x1="9" y1="7" x2="9" y2="11" stroke="#ffa726" stroke-width="1.3"/>
+          <circle cx="9" cy="13.5" r="0.8" fill="#ffa726"/>
+        </svg>
+        <span style="font-size:13px;font-weight:600;color:#ffa726;">取舍策略</span>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.8;">
+        <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;">
+          <span style="color:#e94560;font-size:10px;margin-top:2px;">✕</span>
+          <span>砍掉复杂动画类型（缩放、旋转、路径…）</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;">
+          <span style="color:#66bb6a;font-size:10px;margin-top:2px;">✓</span>
+          <span>只保留淡入淡出，先可控再迭代</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:6px;">
+          <span style="color:#66bb6a;font-size:10px;margin-top:2px;">✓</span>
+          <span>固定核心组件封装成模板复用</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 验证方案 -->
+    <div style="flex:1;background:rgba(22,33,62,0.5);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 20px;backdrop-filter:blur(4px);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <svg width="18" height="18" viewBox="0 0 18 18">
+          <rect x="2" y="2" width="14" height="14" rx="3" fill="none" stroke="#4fc3f7" stroke-width="1.3"/>
+          <polyline points="5.5,9.5 7.5,12 12.5,6.5" fill="none" stroke="#4fc3f7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="font-size:13px;font-weight:600;color:#4fc3f7;">验证方案演进</span>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.8;">
+        <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;">
+          <span style="color:rgba(255,255,255,0.2);font-size:10px;margin-top:2px;text-decoration:line-through;">v1</span>
+          <span style="text-decoration:line-through;color:rgba(255,255,255,0.3);">子代理校验 → Token 消耗高、效果不稳定</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;">
+          <span style="color:#4fc3f7;font-size:10px;margin-top:2px;font-weight:700;">v2</span>
+          <span>内置审查清单 + 验证脚本</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:6px;">
+          <span style="color:rgba(255,255,255,0.15);font-size:8px;margin-top:3px;">→</span>
+          <span>语法检查 + 规范验证，确定性更强</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部重点结论 -->
+  <div style="position:absolute;bottom:36px;left:56px;right:56px;display:flex;align-items:center;justify-content:space-between;z-index:10;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:32px;height:32px;background:linear-gradient(135deg,#e94560,#e9456088);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 16 16">
+          <path d="M8 1l2.2 4.5 5 .7-3.6 3.5.8 5L8 12.4 3.6 14.7l.8-5L0.8 6.2l5-.7z" fill="#fff" opacity="0.9"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:#ffffff;">配置驱动 = 可控性 + 扩展性</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:1px;">AI 生成 JSON，模板负责渲染，职责清晰分离</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:#e94560;box-shadow:0 0 6px rgba(233,69,96,0.5);"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);"></div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

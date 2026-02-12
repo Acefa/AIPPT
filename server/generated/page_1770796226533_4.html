@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill 架构设计：配置驱动的核心思想</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+</style>
+</head>
+<body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0a0a14;">
+
+<div style="width:1024px;height:768px;position:relative;overflow:hidden;font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);">
+
+  <!-- 背景装饰网格 -->
+  <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.04;" viewBox="0 0 1024 768">
+    <defs>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e94560" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+
+  <!-- 背景光晕 -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(233,69,96,0.08) 0%,transparent 70%);border-radius:50%;"></div>
+  <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(15,52,96,0.4) 0%,transparent 70%);border-radius:50%;"></div>
+  <div style="position:absolute;bottom:-60px;left:-60px;width:250px;height:250px;background:radial-gradient(circle,rgba(233,69,96,0.06) 0%,transparent 70%);border-radius:50%;"></div>
+
+  <!-- 顶部装饰线 -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,#e94560 30%,#e94560 70%,transparent);"></div>
+
+  <!-- 页码 -->
+  <div style="position:absolute;top:24px;right:36px;font-size:13px;color:rgba(255,255,255,0.3);letter-spacing:1px;">
+    <span style="color:#e94560;font-weight:700;">05</span> / 08
+  </div>
+
+  <!-- 标题区域 -->
+  <div style="position:absolute;top:28px;left:48px;right:100px;">
+    <div style="font-size:11px;color:#e94560;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;font-weight:500;">ARCHITECTURE DESIGN</div>
+    <div style="font-size:26px;font-weight:700;color:#ffffff;line-height:1.3;">
+      Skill 架构设计：<span style="color:#e94560;">配置驱动</span>的核心思想
+    </div>
+    <div style="width:60px;height:2px;background:linear-gradient(90deg,#e94560,transparent);margin-top:10px;border-radius:1px;"></div>
+  </div>
+
+  <!-- ============ 中心辐射图 ============ -->
+
+  <!-- 中心核心节点 -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);margin-top:30px;z-index:10;">
+    <!-- 外圈光环 -->
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:190px;height:190px;border-radius:50%;border:1px solid rgba(233,69,96,0.15);"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:220px;height:220px;border-radius:50%;border:1px dashed rgba(233,69,96,0.08);"></div>
+    <!-- 核心圆 -->
+    <div style="width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#e94560 0%,#c23152 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:0 0 60px rgba(233,69,96,0.3),0 0 120px rgba(233,69,96,0.1),inset 0 1px 0 rgba(255,255,255,0.2);position:relative;">
+      <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:400;margin-bottom:2px;">配置驱动</div>
+      <div style="font-size:18px;color:#fff;font-weight:900;letter-spacing:1px;">JSON</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:4px;">核心架构思想</div>
+    </div>
+  </div>
+
+  <!-- 连接线 SVG -->
+  <svg style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;" viewBox="0 0 1024 768">
+    <!-- 左上 - 分镜本质 -->
+    <line x1="512" y1="414" x2="195" y2="240" stroke="url(#lineGrad1)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5"/>
+    <!-- 右上 - Element -->
+    <line x1="512" y1="414" x2="830" y2="240" stroke="url(#lineGrad2)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5"/>
+    <!-- 左下 - 取舍策略 -->
+    <line x1="512" y1="414" x2="175" y2="580" stroke="url(#lineGrad3)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5"/>
+    <!-- 右下 - 优势 -->
+    <line x1="512" y1="414" x2="850" y2="580" stroke="url(#lineGrad4)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5"/>
+    <defs>
+      <linearGradient id="lineGrad1" x1="512" y1="414" x2="195" y2="240" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#e94560" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#e94560" stop-opacity="0.1"/>
+      </linearGradient>
+      <linearGradient id="lineGrad2" x1="512" y1="414" x2="830" y2="240" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#e94560" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#e94560" stop-opacity="0.1"/>
+      </linearGradient>
+      <linearGradient id="lineGrad3" x1="512" y1="414" x2="175" y2="580" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#e94560" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#e94560" stop-opacity="0.1"/>
+      </linearGradient>
+      <linearGradient id="lineGrad4" x1="512" y1="414" x2="850" y2="580" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#e94560" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#e94560" stop-opacity="0.1"/>
+      </linearGradient>
+    </defs>
+    <!-- 连接点 -->
+    <circle cx="512" cy="414" r="3" fill="#e94560" opacity="0.8"/>
+  </svg>
+
+  <!-- 左上卡片 - 分镜本质 -->
+  <div style="position:absolute;top:160px;left:48px;width:260px;z-index:8;">
+    <div style="background:linear-gradient(135deg,rgba(26,26,46,0.95),rgba(22,33,62,0.9));border:1px solid rgba(233,69,96,0.2);border-radius:12px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.3),0 0 20px rgba(233,69,96,0.05);backdrop-filter:blur(10px);">
+      <div style="display:flex;align-items:center;margin-bottom:12px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,rgba(233,69,96,0.2),rgba(233,69,96,0.05));display:flex;justify-content:center;align-items:center;margin-right:10px;border:1px solid rgba(233,69,96,0.15);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:#fff;">分镜本质</div>
+      </div>
+      <div style="font-size:11.5px;color:rgba(255,255,255,0.6);line-height:1.8;">
+        <div style="display:flex;align-items:flex-start;margin-bottom:4px;">
+          <span style="color:#e94560;margin-right:6px;font-size:8px;margin-top:4px;">●</span>
+          <span>固定背景画布</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;margin-bottom:4px;">
+          <span style="color:#e94560;margin-right:6px;font-size:8px;margin-top:4px;">●</span>
+          <span>多元素依次出现</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;">
+          <span style="color:#e94560;margin-right:6px;font-size:8px;margin-top:4px;">●</span>
+          <span>进出场动画编排</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右上卡片 - 最小渲染单位 -->
+  <div style="position:absolute;top:155px;right:48px;width:270px;z-index:8;">
+    <div style="background:linear-gradient(135deg,rgba(26,26,46,0.95),rgba(22,33,62,0.9));border:1px solid rgba(15,52,96,0.4);border-radius:12px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.3),0 0 20px rgba(15,52,96,0.1);backdrop-filter:blur(10px);">
+      <div style="display:flex;align-items:center;margin-bottom:14px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,rgba(15,52,96,0.4),rgba(15,52,96,0.1));display:flex;justify-content:center;align-items:center;margin-right:10px;border:1px solid rgba(15,52,96,0.3);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a9eff" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:#fff;">最小渲染单位 Element</div>
+      </div>
+      <!-- Element 类型标签 -->
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span style="padding:4px 10px;border-radius:20px;font-size:10.5px;color:rgba(255,255,255,0.7);background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);">SVG 图形</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10.5px;color:rgba(255,255,255,0.7);background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);">信息卡片</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10.5px;color:rgba(255,255,255,0.7);background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);">数据表格</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10.5px;color:rgba(255,255,255,0.7);background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);">列表组件</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10.5px;color:rgba(255,255,255,0.7);background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);">文字标题</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10.5px;color:rgba(255,255,255,0.7);background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);">图表</span>
+      </div>
+      <div style="margin-top:10px;font-size:10.5px;color:rgba(255,255,255,0.4);line-height:1.6;">
+        JSON 描述每个 Element 的时间、位置和动画
+      </div>
+    </div>
+  </div>
+
+  <!-- 左下卡片 - 取舍策略 -->
+  <div style="position:absolute;bottom:100px;left:48px;width:255px;z-index:8;">
+    <div style="background:linear-gradient(135deg,rgba(26,26,46,0.95),rgba(22,33,62,0.9));border:1px solid rgba(233,69,96,0.15);border-radius:12px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.3);backdrop-filter:blur(10px);">
+      <div style="display:flex;align-items:center;margin-bottom:12px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,rgba(255,180,50,0.2),rgba(255,180,50,0.05));display:flex;justify-content:center;align-items:center;margin-right:10px;border:1px solid rgba(255,180,50,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffb432" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:#fff;">关键取舍策略</div>
+      </div>
+      <div style="font-size:11.5px;color:rgba(255,255,255,0.55);line-height:1.8;">
+        <div style="display:flex;align-items:center;margin-bottom:6px;">
+          <span style="color:#e94560;font-size:14px;margin-right:8px;">✕</span>
+          <span style="text-decoration:line-through;opacity:0.5;">复杂动画类型</span>
+        </div>
+        <div style="display:flex;align-items:center;margin-bottom:6px;">
+          <span style="color:#4ecdc4;font-size:14px;margin-right:8px;">✓</span>
+          <span style="color:rgba(255,255,255,0.75);">只保留淡入淡出</span>
+        </div>
+        <div style="margin-top:8px;padding:8px 10px;background:rgba(255,180,50,0.06);border-radius:6px;border-left:2px solid rgba(255,180,50,0.3);font-size:10.5px;color:rgba(255,255,255,0.5);">
+          先可控，再迭代
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右下卡片 - 两大优势 -->
+  <div style="position:absolute;bottom:85px;right:48px;width:270px;z-index:8;">
+    <div style="background:linear-gradient(135deg,rgba(26,26,46,0.95),rgba(22,33,62,0.9));border:1px solid rgba(78,205,196,0.2);border-radius:12px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.3),0 0 20px rgba(78,205,196,0.05);backdrop-filter:blur(10px);">
+      <div style="display:flex;align-items:center;margin-bottom:14px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,rgba(78,205,196,0.2),rgba(78,205,196,0.05));display:flex;justify-content:center;align-items:center;margin-right:10px;border:1px solid rgba(78,205,196,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:#fff;">两大显著优势</div>
+      </div>
+      <!-- 优势1 -->
+      <div style="background:rgba(78,205,196,0.06);border-radius:8px;padding:10px 12px;margin-bottom:8px;border:1px solid rgba(78,205,196,0.1);">
+        <div style="font-size:12px;font-weight:600;color:#4ecdc4;margin-bottom:3px;">可控性</div>
+        <div style="font-size:10.5px;color:rgba(255,255,255,0.5);line-height:1.5;">避免 AI 生成代码的不确定性</div>
+      </div>
+      <!-- 优势2 -->
+      <div style="background:rgba(78,205,196,0.06);border-radius:8px;padding:10px 12px;border:1px solid rgba(78,205,196,0.1);">
+        <div style="font-size:12px;font-weight:600;color:#4ecdc4;margin-bottom:3px;">扩展性</div>
+        <div style="font-size:10.5px;color:rgba(255,255,255,0.5);line-height:1.5;">新增功能只需添加组件 + JSON 规则</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中心公式条 -->
+  <div style="position:absolute;bottom:38px;left:50%;transform:translateX(-50%);z-index:10;">
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 28px;background:linear-gradient(135deg,rgba(233,69,96,0.12),rgba(233,69,96,0.04));border:1px solid rgba(233,69,96,0.25);border-radius:30px;box-shadow:0 4px 20px rgba(233,69,96,0.1);">
+      <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);">固定模板</span>
+      <span style="font-size:16px;color:#e94560;font-weight:300;">+</span>
+      <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);">JSON 配置</span>
+      <span style="font-size:16px;color:#e94560;font-weight:300;">=</span>
+      <span style="font-size:13px;font-weight:700;color:#e94560;">可控性</span>
+      <span style="font-size:13px;color:rgba(255,255,255,0.4);">与</span>
+      <span style="font-size:13px;font-weight:700;color:#4ecdc4;">扩展性</span>
+      <span style="font-size:13px;color:rgba(255,255,255,0.4);">兼得</span>
+    </div>
+  </div>
+
+  <!-- 底部装饰线 -->
+  <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(233,69,96,0.3) 30%,rgba(233,69,96,0.3) 70%,transparent);"></div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP 版本：手动跑通完整流程</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+</style>
+</head>
+<body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0a0a14;">
+
+<div style="width:1024px;height:768px;position:relative;overflow:hidden;font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);">
+
+  <!-- 网格装饰背景 -->
+  <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.04;" viewBox="0 0 1024 768">
+    <defs>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+
+  <!-- 右上角装饰光晕 -->
+  <div style="position:absolute;top:-120px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(233,69,96,0.12) 0%,transparent 70%);border-radius:50%;"></div>
+
+  <!-- 左下角装饰光晕 -->
+  <div style="position:absolute;bottom:-100px;left:-60px;width:350px;height:350px;background:radial-gradient(circle,rgba(15,52,96,0.4) 0%,transparent 70%);border-radius:50%;"></div>
+
+  <!-- 顶部进度条 -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:rgba(255,255,255,0.06);">
+    <div style="width:50%;height:100%;background:linear-gradient(90deg,#e94560,#ff6b81);border-radius:0 2px 2px 0;"></div>
+  </div>
+
+  <!-- 页码 -->
+  <div style="position:absolute;top:24px;right:40px;font-size:13px;color:rgba(255,255,255,0.3);font-weight:300;letter-spacing:1px;">
+    <span style="color:rgba(233,69,96,0.7);font-weight:700;">04</span> / 08
+  </div>
+
+  <!-- 阶段标签 -->
+  <div style="position:absolute;top:24px;left:40px;display:flex;align-items:center;gap:8px;">
+    <div style="width:8px;height:8px;background:#e94560;border-radius:50;box-shadow:0 0 8px rgba(233,69,96,0.5);"></div>
+    <span style="font-size:11px;color:rgba(233,69,96,0.8);font-weight:500;letter-spacing:2px;text-transform:uppercase;">PHASE 2 · MVP 实现</span>
+  </div>
+
+  <!-- 主标题区域 -->
+  <div style="position:absolute;top:52px;left:40px;right:40px;">
+    <h1 style="margin:0;font-size:32px;font-weight:900;color:#ffffff;line-height:1.3;letter-spacing:-0.5px;">
+      MVP 版本<span style="color:rgba(233,69,96,0.9);">：</span>手动跑通完整流程
+    </h1>
+    <div style="margin-top:8px;display:flex;align-items:center;gap:12px;">
+      <div style="height:2px;width:48px;background:linear-gradient(90deg,#e94560,transparent);border-radius:1px;"></div>
+      <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.45);font-weight:300;">
+        核心原则 — 手动流程验证通过后，再封装成 Skill
+      </p>
+    </div>
+  </div>
+
+  <!-- 流程连接线 -->
+  <svg style="position:absolute;top:138px;left:0;width:100%;height:40px;opacity:0.6;" viewBox="0 0 1024 40">
+    <defs>
+      <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#e94560;stop-opacity:0.1"/>
+        <stop offset="25%" style="stop-color:#e94560;stop-opacity:0.8"/>
+        <stop offset="50%" style="stop-color:#ff6b81;stop-opacity:0.8"/>
+        <stop offset="75%" style="stop-color:#e94560;stop-opacity:0.8"/>
+        <stop offset="100%" style="stop-color:#e94560;stop-opacity:0.1"/>
+      </linearGradient>
+      <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#e94560"/>
+      </marker>
+    </defs>
+    <line x1="140" y1="20" x2="920" y2="20" stroke="url(#lineGrad)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- 四个节点 -->
+    <circle cx="175" cy="20" r="5" fill="#e94560" opacity="0.9"/>
+    <circle cx="400" cy="20" r="5" fill="#e94560" opacity="0.9"/>
+    <circle cx="625" cy="20" r="5" fill="#e94560" opacity="0.9"/>
+    <circle cx="855" cy="20" r="5" fill="#e94560" opacity="0.9"/>
+    <!-- 箭头 -->
+    <line x1="195" y1="20" x2="380" y2="20" stroke="#e94560" stroke-width="1" marker-end="url(#arrow)" opacity="0.5"/>
+    <line x1="420" y1="20" x2="605" y2="20" stroke="#e94560" stroke-width="1" marker-end="url(#arrow)" opacity="0.5"/>
+    <line x1="645" y1="20" x2="835" y2="20" stroke="#e94560" stroke-width="1" marker-end="url(#arrow)" opacity="0.5"/>
+  </svg>
+
+  <!-- 四步骤卡片区域 -->
+  <div style="position:absolute;top:180px;left:40px;right:40px;display:flex;gap:14px;">
+
+    <!-- 步骤1：生成剧本 -->
+    <div style="flex:1;background:linear-gradient(180deg,rgba(233,69,96,0.08) 0%,rgba(26,26,46,0.6) 100%);border:1px solid rgba(233,69,96,0.2);border-radius:12px;padding:20px 16px;position:relative;backdrop-filter:blur(10px);transition:all 0.3s;">
+      <!-- 步骤编号 -->
+      <div style="position:absolute;top:-1px;left:-1px;background:linear-gradient(135deg,#e94560,#c73652);border-radius:12px 0 12px 0;padding:4px 14px;">
+        <span style="font-size:11px;font-weight:700;color:#fff;letter-spacing:1px;">STEP 1</span>
+      </div>
+      <!-- 图标 -->
+      <div style="margin-top:24px;margin-bottom:12px;">
+        <svg width="36" height="36" viewBox="0 0 36 36">
+          <rect x="6" y="4" width="24" height="28" rx="3" fill="none" stroke="rgba(233,69,96,0.6)" stroke-width="1.5"/>
+          <line x1="11" y1="12" x2="25" y2="12" stroke="rgba(233,69,96,0.4)" stroke-width="1.2"/>
+          <line x1="11" y1="17" x2="22" y2="17" stroke="rgba(233,69,96,0.4)" stroke-width="1.2"/>
+          <line x1="11" y1="22" x2="20" y2="22" stroke="rgba(233,69,96,0.4)" stroke-width="1.2"/>
+          <circle cx="26" cy="26" r="7" fill="#1a1a2e" stroke="#e94560" stroke-width="1.2"/>
+          <text x="26" y="29.5" text-anchor="middle" fill="#e94560" font-size="9" font-weight="700">AI</text>
+        </svg>
+      </div>
+      <h3 style="margin:0 0 8px 0;font-size:15px;font-weight:700;color:#ffffff;">生成剧本</h3>
+      <p style="margin:0;font-size:11.5px;color:rgba(255,255,255,0.55);line-height:1.7;font-weight:300;">
+        用 <span style="color:rgba(233,69,96,0.9);font-weight:500;">Gemini</span> 梳理项目逻辑，理解上下文后自动编写完整的视频旁白剧本
+      </p>
+      <!-- 工具标签 -->
+      <div style="margin-top:12px;display:inline-block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.15);border-radius:20px;padding:3px 10px;">
+        <span style="font-size:10px;color:rgba(233,69,96,0.7);font-weight:500;">Gemini API</span>
+      </div>
+    </div>
+
+    <!-- 步骤2：搞定语音 -->
+    <div style="flex:1;background:linear-gradient(180deg,rgba(15,52,96,0.3) 0%,rgba(26,26,46,0.6) 100%);border:1px solid rgba(15,52,96,0.4);border-radius:12px;padding:20px 16px;position:relative;backdrop-filter:blur(10px);">
+      <div style="position:absolute;top:-1px;left:-1px;background:linear-gradient(135deg,#0f3460,#0a2647);border-radius:12px 0 12px 0;padding:4px 14px;">
+        <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:1px;">STEP 2</span>
+      </div>
+      <div style="margin-top:24px;margin-bottom:12px;">
+        <svg width="36" height="36" viewBox="0 0 36 36">
+          <rect x="14" y="4" width="8" height="16" rx="4" fill="none" stroke="rgba(100,160,255,0.6)" stroke-width="1.5"/>
+          <path d="M10 16 Q10 26 18 26 Q26 26 26 16" fill="none" stroke="rgba(100,160,255,0.4)" stroke-width="1.2"/>
+          <line x1="18" y1="26" x2="18" y2="31" stroke="rgba(100,160,255,0.4)" stroke-width="1.2"/>
+          <line x1="13" y1="31" x2="23" y2="31" stroke="rgba(100,160,255,0.4)" stroke-width="1.2"/>
+          <!-- 声波 -->
+          <path d="M28 12 Q31 18 28 24" fill="none" stroke="rgba(100,160,255,0.3)" stroke-width="1"/>
+          <path d="M31 10 Q35 18 31 26" fill="none" stroke="rgba(100,160,255,0.2)" stroke-width="1"/>
+        </svg>
+      </div>
+      <h3 style="margin:0 0 8px 0;font-size:15px;font-weight:700;color:#ffffff;">搞定语音</h3>
+      <p style="margin:0;font-size:11.5px;color:rgba(255,255,255,0.55);line-height:1.7;font-weight:300;">
+        通过 <span style="color:rgba(100,160,255,0.9);font-weight:500;">MiniMax API</span> 将剧本文字转为高质量 TTS 语音音频文件
+      </p>
+      <div style="margin-top:12px;display:inline-block;background:rgba(15,52,96,0.25);border:1px solid rgba(15,52,96,0.3);border-radius:20px;padding:3px 10px;">
+        <span style="font-size:10px;color:rgba(100,160,255,0.7);font-weight:500;">MiniMax TTS</span>
+      </div>
+    </div>
+
+    <!-- 步骤3：时间表与字幕 -->
+    <div style="flex:1;background:linear-gradient(180deg,rgba(255,180,50,0.06) 0%,rgba(26,26,46,0.6) 100%);border:1px solid rgba(255,180,50,0.15);border-radius:12px;padding:20px 16px;position:relative;backdrop-filter:blur(10px);">
+      <div style="position:absolute;top:-1px;left:-1px;background:linear-gradient(135deg,#c78a20,#a06a10);border-radius:12px 0 12px 0;padding:4px 14px;">
+        <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:1px;">STEP 3</span>
+      </div>
+      <div style="margin-top:24px;margin-bottom:12px;">
+        <svg width="36" height="36" viewBox="0 0 36 36">
+          <circle cx="18" cy="18" r="13" fill="none" stroke="rgba(255,180,50,0.5)" stroke-width="1.5"/>
+          <line x1="18" y1="18" x2="18" y2="10" stroke="rgba(255,180,50,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="18" y1="18" x2="24" y2="20" stroke="rgba(255,180,50,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="18" cy="18" r="2" fill="rgba(255,180,50,0.6)"/>
+          <!-- 字幕图标 -->
+          <rect x="22" y="24" width="12" height="8" rx="2" fill="rgba(26,26,46,0.8)" stroke="rgba(255,180,50,0.5)" stroke-width="1"/>
+          <line x1="24" y1="27" x2="32" y2="27" stroke="rgba(255,180,50,0.4)" stroke-width="0.8"/>
+          <line x1="24" y1="29.5" x2="30" y2="29.5" stroke="rgba(255,180,50,0.3)" stroke-width="0.8"/>
+        </svg>
+      </div>
+      <h3 style="margin:0 0 8px 0;font-size:15px;font-weight:700;color:#ffffff;">时间表与字幕</h3>
+      <p style="margin:0;font-size:11.5px;color:rgba(255,255,255,0.55);line-height:1.7;font-weight:300;">
+        <span style="color:rgba(255,180,50,0.9);font-weight:500;">ffprobe</span> 计算时间表，<span style="color:rgba(255,180,50,0.9);font-weight:500;">Whisper</span> 生成 SRT 后 AI 校正错别字
+      </p>
+      <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+        <div style="display:inline-block;background:rgba(255,180,50,0.08);border:1px solid rgba(255,180,50,0.15);border-radius:20px;padding:3px 10px;">
+          <span style="font-size:10px;color:rgba(255,180,50,0.7);font-weight:500;">ffprobe</span>
+        </div>
+        <div style="display:inline-block;background:rgba(255,180,50,0.08);border:1px solid rgba(255,180,50,0.15);border-radius:20px;padding:3px 10px;">
+          <span style="font-size:10px;color:rgba(255,180,50,0.7);font-weight:500;">Whisper</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 步骤4：生成视频 -->
+    <div style="flex:1;background:linear-gradient(180deg,rgba(80,200,120,0.06) 0%,rgba(26,26,46,0.6) 100%);border:1px solid rgba(80,200,120,0.15);border-radius:12px;padding:20px 16px;position:relative;backdrop-filter:blur(10px);">
+      <div style="position:absolute;top:-1px;left:-1px;background:linear-gradient(135deg,#2d8a4e,#1e6b3a);border-radius:12px 0 12px 0;padding:4px 14px;">
+        <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:1px;">STEP 4</span>
+      </div>
+      <div style="margin-top:24px;margin-bottom:12px;">
+        <svg width="36" height="36" viewBox="0 0 36 36">
+          <rect x="4" y="8" width="28" height="20" rx="3" fill="none" stroke="rgba(80,200,120,0.5)" stroke-width="1.5"/>
+          <polygon points="15,14 15,24 24,19" fill="rgba(80,200,120,0.5)"/>
+          <!-- 导出箭头 -->
+          <circle cx="30" cy="8" r="6" fill="rgba(26,26,46,0.9)" stroke="rgba(80,200,120,0.5)" stroke-width="1"/>
+          <path d="M28 8 L30 5 L32 8 M30 5 L30 11" fill="none" stroke="rgba(80,200,120,0.7)" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 style="margin:0 0 8px 0;font-size:15px;font-weight:700;color:#ffffff;">生成视频</h3>
+      <p style="margin:0;font-size:11.5px;color:rgba(255,255,255,0.55);line-height:1.7;font-weight:300;">
+        合成最终视频，代码能运行、<span style="color:rgba(80,200,120,0.9);font-weight:500;">音画同步</span>，但视觉设计仍需打磨
+      </p>
+      <div style="margin-top:12px;display:inline-block;background:rgba(80,200,120,0.08);border:1px solid rgba(80,200,120,0.15);border-radius:20px;padding:3px 10px;">
+        <span style="font-size:10px;color:rgba(80,200,120,0.7);font-weight:500;">FFmpeg 合成</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 关键坑点警告框 -->
+  <div style="position:absolute;top:488px;left:40px;right:40px;background:linear-gradient(135deg,rgba(233,69,96,0.08),rgba(233,69,96,0.03));border:1px solid rgba(233,69,96,0.2);border-radius:10px;padding:14px 20px;display:flex;align-items:flex-start;gap:14px;">
+    <!-- 警告图标 -->
+    <div style="flex-shrink:0;width:32px;height:32px;background:linear-gradient(135deg,rgba(233,69,96,0.2),rgba(233,69,96,0.08));border-radius:8px;display:flex;align-items:center;justify-content:center;margin-top:2px;">
+      <svg width="18" height="18" viewBox="0 0 18 18">
+        <path d="M9 1 L17 16 L1 16 Z" fill="none" stroke="#e94560" stroke-width="1.5" stroke-linejoin="round"/>
+        <line
